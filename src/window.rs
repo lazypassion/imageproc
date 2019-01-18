@@ -5,8 +5,7 @@ use sdl2::{
     event::{Event, WindowEvent},
     keyboard::Keycode,
     pixels::{Color, PixelFormatEnum},
-    rect::Rect,
-    surface::Surface
+    rect::Rect, surface::Surface
 };
 
 /// Displays the provided RGBA image in a new window.
@@ -151,11 +150,11 @@ pub fn display_multiple_images(title: &str, image: Vec<RgbaImage>, window_width:
     //     .build()
     //     .expect("couldn't create canvas");
 
-    // let mut texture_creators: Vec<sdl2::render::TextureCreator<WindowContext>> = Vec::new();
-    // for i in 0..canvases.len() {
-    //     let texture_creator = canvases[i as usize].texture_creator();
-    //     texture_creators.push(texture_creator);
-    // }
+    let mut texture_creators: Vec<sdl2::render::TextureCreator<WindowContext>> = Vec::new();
+    for i in 0..canvases.len() {
+        let texture_creator = canvases[i as usize].texture_creator();
+        texture_creators.push(texture_creator);
+    }
     // let texture_creator = canvas.texture_creator();
     use sdl2::render::TextureCreator;
     use sdl2::render::Canvas;
@@ -191,12 +190,11 @@ pub fn display_multiple_images(title: &str, image: Vec<RgbaImage>, window_width:
 
     };
     // for (canvas, texture_creator) in canvases.iter().zip(texture_creators.iter()) {
-    // for (i, (mut canvas, texture_creator)) in canvases.into_iter().zip(texture_creators.iter()).enumerate() {
-    //     let i = i as usize;
-    //     render_image_to_canvas(&image[i], window_width, window_height, &mut canvas, texture_creator);
+    for (i, (mut canvas, texture_creator)) in canvases.into_iter().zip(texture_creators.iter()).enumerate() {
+        render_image_to_canvas(&image[i], window_width, window_height, &mut canvas, texture_creator);
         // render_image_to_canvas(&image[i], window_width, window_height, canvases[i], texture_creators[i]); 
         // render_image_to_canvas(image, window_width, window_height, &canvas, &texture_creator);
-    // }
+    }
     
     // Create and start event loop to keep window open until Esc
     let mut event_pump = sdl.event_pump().unwrap();
@@ -214,6 +212,11 @@ pub fn display_multiple_images(title: &str, image: Vec<RgbaImage>, window_width:
                     ..
                 } => {
                     // render_image_to_canvas(image, w as u32, h as u32);
+                    // for (i, (mut canvas, texture_creator)) in canvases.iter().zip(texture_creators.iter()).enumerate() {
+                    //     render_image_to_canvas(&image[i], w as u32, h as u32, &mut canvas, texture_creator);
+                    //     // render_image_to_canvas(&image[i], window_width, window_height, canvases[i], texture_creators[i]); 
+                    //     // render_image_to_canvas(image, window_width, window_height, &canvas, &texture_creator);
+                    // }
                 }
                 _ => {}
             }
