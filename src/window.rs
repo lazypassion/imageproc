@@ -139,9 +139,10 @@ pub fn display_multiple_images(title: &str, image: Vec<RgbaImage>, window_width:
     // for i in 0..windows.len() {
     for window in windows.into_iter() {
         // let mut canvas = windows[i as usize].into_canvas()
-        let mut canvas = window.into_canvas()
+        let canvas = window.into_canvas()
+            .software()
             .build()
-            .expect("couldn't creat canvas");
+            .expect("couldn't create canvas");
         canvases.push(canvas);
     }
 
@@ -150,11 +151,11 @@ pub fn display_multiple_images(title: &str, image: Vec<RgbaImage>, window_width:
     //     .build()
     //     .expect("couldn't create canvas");
 
-    let mut texture_creators: Vec<sdl2::render::TextureCreator<WindowContext>> = Vec::new();
-    for i in 0..canvases.len() {
-        let texture_creator = canvases[i as usize].texture_creator();
-        texture_creators.push(texture_creator);
-    }
+    // let mut texture_creators: Vec<sdl2::render::TextureCreator<WindowContext>> = Vec::new();
+    // for i in 0..canvases.len() {
+    //     let texture_creator = canvases[i as usize].texture_creator();
+    //     texture_creators.push(texture_creator);
+    // }
     // let texture_creator = canvas.texture_creator();
     use sdl2::render::TextureCreator;
     use sdl2::render::Canvas;
@@ -190,12 +191,12 @@ pub fn display_multiple_images(title: &str, image: Vec<RgbaImage>, window_width:
 
     };
     // for (canvas, texture_creator) in canvases.iter().zip(texture_creators.iter()) {
-    for (i, (mut canvas, texture_creator)) in canvases.into_iter().zip(texture_creators.iter()).enumerate() {
-        let i = i as usize;
-        render_image_to_canvas(&image[i], window_width, window_height, &mut canvas, texture_creator);
+    // for (i, (mut canvas, texture_creator)) in canvases.into_iter().zip(texture_creators.iter()).enumerate() {
+    //     let i = i as usize;
+    //     render_image_to_canvas(&image[i], window_width, window_height, &mut canvas, texture_creator);
         // render_image_to_canvas(&image[i], window_width, window_height, canvases[i], texture_creators[i]); 
         // render_image_to_canvas(image, window_width, window_height, &canvas, &texture_creator);
-    }
+    // }
     
     // Create and start event loop to keep window open until Esc
     let mut event_pump = sdl.event_pump().unwrap();
