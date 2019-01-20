@@ -1,6 +1,7 @@
 //! Displays an image in a window created by sdl2.
 
 use image::{RgbaImage, imageops::resize};
+use sdl2_sys;
 use sdl2::{
     event::{Event, WindowEvent},
     keyboard::Keycode,
@@ -194,6 +195,10 @@ pub fn display_multiple_images(title: &str, image: Vec<RgbaImage>, window_width:
                 } => {
                     for canvas in canvases.iter_mut() {
                         if window_id == canvas.window().id() {
+                            println!("{}",  canvas.window().window_flags());
+                            use sdl2_sys::SDL_WindowFlags;
+                            println!("{:?}", SDL_WindowFlags::SDL_WINDOW_HIDDEN);
+
                             canvas.window_mut().hide();
                         }
                     }
