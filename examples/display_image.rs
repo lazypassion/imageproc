@@ -7,7 +7,6 @@
 #[cfg(feature = "display-window")]
 fn main() {
     use imageproc::window::display_image;
-    use imageproc::window::display_multiple_images;
     use std::env;
 
     let image_path = match env::args().nth(1) {
@@ -21,12 +20,8 @@ fn main() {
     let image = image::open(&image_path)
         .expect("No image found at provided path")
         .to_rgba();
-    let other_img = image::open(&image_path)
-        .expect("No image found at provided path")
-        .to_rgba();
 
-    display_multiple_images("", vec![image, other_img], 1000, 1000);
-    // display_image("", &image, 1000, 1000);
+    display_image("", &image, 500, 500);
 }
 
 #[cfg(not(feature = "display-window"))]
